@@ -19,4 +19,8 @@ abstract class AbstractRepository {
         return $this->model->all();
     }
 
+    public function show( $id ){
+        return $this->model->find($id);
+    }
+
 }

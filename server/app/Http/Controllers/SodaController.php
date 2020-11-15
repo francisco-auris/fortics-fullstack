@@ -8,26 +8,22 @@ use Illuminate\Http\Request;
 class SodaController extends Controller
 {
 
+    private $model;
+
+    function __construct(SodaInterface $soda)
+    {
+        $this->model = $soda;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( SodaInterface $model )
+    public function index()
     {
         //
-        $result = $model->all();
+        $result = $this->model->all();
         return $result;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -39,6 +35,8 @@ class SodaController extends Controller
     public function store(Request $request)
     {
         //
+        $result = $this->model->store( $request );
+        return response()->json($result, $result['response']);
     }
 
     /**
@@ -50,18 +48,9 @@ class SodaController extends Controller
     public function show($id)
     {
         //
+        return $this->model->show( $id );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -73,6 +62,8 @@ class SodaController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $result = $this->model->update($request, $id);
+        return response()->json($result, $result['response']);
     }
 
     /**

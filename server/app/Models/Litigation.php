@@ -13,6 +13,8 @@ class Litigation extends Model
 
     protected $fillable = ["value"];
 
+    protected $hidden = ["deleted_at","created_at","updated_at"];
+
     public function sodas() {
         return $this->hasMany('App\Models\Soda');
     }

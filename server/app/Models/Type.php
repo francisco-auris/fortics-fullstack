@@ -13,6 +13,8 @@ class Type extends Model
 
     protected $fillable = ["type_name"];
 
+    protected $hidden = ["deleted_at","created_at","updated_at"];
+
     public function sodas() {
         return $this->hasMany('App\Models\Soda');
     }
