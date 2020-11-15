@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\BrandController;
+use App\Http\Controllers\LitigationController;
+use App\Http\Controllers\SodaController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('soda', SodaController::class);
+
+Route::apiResource('type', TypeController::class);
+
+Route::apiResource('brand', BrandController::class);
+
+Route::apiResource('litigation', LitigationController::class);
