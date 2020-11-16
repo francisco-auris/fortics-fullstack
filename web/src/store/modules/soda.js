@@ -34,6 +34,19 @@ const actions = {
         })
         .catch(err => reject(err))
     })
+  },
+
+  create( {commit, dispatch}, dados ){
+    return new Promise((resolve, reject) => {
+      http.post(`${uri}/api/soda`, dados)
+        .then(res => {
+          resolve(res)
+          if( res.status == 200 ){
+            dispatch('loadSodas')
+          }
+        })
+        .catch(err => reject(err))
+    })
   }
 
 }

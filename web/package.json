@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "material-design-icons-iconfont": "^6.1.0",
+    "v-money": "^0.8.1",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",

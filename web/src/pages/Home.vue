@@ -1,12 +1,8 @@
 <template>
 <v-container>
 
-  <v-btn
-    color="primary"
-    rounded
-  >
-    <v-icon>add</v-icon> Novo
-  </v-btn>
+
+  <create-soda />
 
   <v-row class="mt-5">
 
@@ -59,6 +55,7 @@
       <tr>
         <th>Marca</th>
         <th>Sabor</th>
+        <th>Tipo</th>
         <th>Litragem</th>
         <th>Estoque</th>
         <th>Valor (unid.)</th>
@@ -68,6 +65,7 @@
       <tr v-for="item in filterDatas" :key="item.id">
         <td>{{ item.brand.brand_name }}</td>
         <td>{{ item.flavor }}</td>
+        <td>{{ item.type.type_name }}</td>
         <td>{{ item.litigation.value }}</td>
         <td>{{ item.stock }}</td>
         <td>{{ item.value_unit }}</td>
@@ -80,7 +78,13 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import CreateSoda from '@/components/dialog/CreateSoda'
+
 export default {
+
+  components: {
+    'create-soda': CreateSoda
+  },
 
   data: () =>({
 

@@ -21,7 +21,7 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
     ];
 
     public function all() {
-        return $this->model->with(['brand','type','litigation'])->paginate(2);
+        return $this->model->with(['brand','type','litigation'])->paginate(10);
     }
 
     public function update( Request $req, $id ){
