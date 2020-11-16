@@ -1,0 +1,32 @@
+version: "3"
+services: 
+  dbase:
+    build: 
+      dockerfile: ./docker/database.dockerfile
+      context: .
+    image: auris/dbaselaravel
+    container_name: dbase
+    ports: 
+      - "3306:3306"
+    networks: 
+      - "teste-network"
+
+  api: 
+    build: 
+      dockerfile: ./docker/laravel.dockerfile
+      context: .
+    image: auris/serverlaravel
+    container_name: api
+    volumes: 
+      - ./server:/var/www
+    working_dir: /var/www
+    ports: 
+      - "1234:8000"
+    networks: 
+      - "teste-network"
+    depends_on: 
+      - "dbase"
+
+networks:  
+  teste-network:
+    driver: bridge
