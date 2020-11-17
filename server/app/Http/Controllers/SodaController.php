@@ -72,8 +72,16 @@ class SodaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $req)
     {
         //
+        /*$value_receipt = str_replace("[","",$id);
+        $value_receipt = str_replace("]","", $value_receipt);
+        $valuesIds = explode(",", $value_receipt);
+        //return response()->json($id, 200); exit;*/
+        $ids = $req->only("items");
+        
+        $result = $this->model->destroy($ids['items']);
+        return response()->json($result);
     }
 }

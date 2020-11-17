@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('soda', SodaController::class);
 
+Route::delete('soda/delete', "SodaController@destroy");
+
 Route::apiResource('type', TypeController::class);
 
 Route::apiResource('brand', BrandController::class);

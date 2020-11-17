@@ -1,8 +1,26 @@
 <template>
 <v-container>
 
+  <v-row>
+    <v-col cols="1">
+      <create-soda />
+    </v-col>
+    <v-col cols="4">
+      <v-chip
+        v-if="selection.length"
+        class="ma-2"
+        close
+        close-icon="delete"
+        color="red"
+        dark
+        @click:close="actionDelete"
+      >
+        {{ selection.length }} Selecionados
+      </v-chip>
 
-  <create-soda />
+     
+    </v-col>
+  </v-row>
 
   <v-row class="mt-5">
 
@@ -41,6 +59,7 @@
       </v-btn>
 
     </v-col>
+
   </v-row>
 
 
@@ -50,9 +69,12 @@
     v-if="loading"
   ></v-skeleton-loader>
 
+  
+
   <v-simple-table class="mt-5" v-else>
     <thead>
       <tr>
+        <th></th>
         <th>Marca</th>
         <th>Sabor</th>
         <th>Tipo</th>
@@ -63,6 +85,15 @@
     </thead>
     <tbody>
       <tr v-for="item in filterDatas" :key="item.id">
+        <td>
+          <v-checkbox
+              v-model="selection"
+              color="primary"
+              :value="item.id"
+              off-icon="check_box_outline_blank"
+              on-icon="check_box"
+            ></v-checkbox>
+        </td>
         <td>{{ item.brand.brand_name }}</td>
         <td>{{ item.flavor }}</td>
         <td>{{ item.type.type_name }}</td>
@@ -89,7 +120,8 @@ export default {
   data: () =>({
 
     filtro: '',
-    loading: false
+    loading: false,
+    selection: []
 
   }),
   created() {
@@ -128,6 +160,22 @@ export default {
     async pushDataList( page = 1 ){
       this.loading = true
       await this.$store.dispatch('soda/loadSodas', page)
+      this.loading = false
+    },
+
+    async actionDelete(){
+      this.loading = true
+
+      const data = {
+        _method: 'DELETE',
+        items: this.selection
+      }
+
+      await this.$store.dispatch('soda/delete', data)  
+            .then(res => {
+              this.selection = []
+              alert(res.data.message);
+            })
       this.loading = false
     }
   },

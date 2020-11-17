@@ -59,6 +59,36 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
 
     }
 
+    public function destroy( $ids ){
+
+        $out = [];
+
+       // return count($ids); exit;
+
+        if( count($this->model->find($ids)) > 0 ){
+            //return "YES"; exit;
+            try {
+                $this->model->destroy($ids);
+                $out['status'] = "success";
+                $out['message'] = "Refrigerante(s) excluidos com sucesso";
+                $out['response'] = 200;
+            }
+            catch( Exception $e ){
+                $out['status'] = "error";
+                $out["message"] = $e->getMessage();
+                $out["response"] = 500;
+            }
+        }
+        else {
+            $out['status'] = "empty";
+            $out['message'] = "Refrigerante(s) não encontrado";
+            $out['response'] = 400;
+        }
+
+        return $out;
+
+    }
+
     public function store( Request $req ){
 
         $validate = Validator::make($req->all(), $this->validator);

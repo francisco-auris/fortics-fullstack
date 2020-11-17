@@ -36,6 +36,18 @@ const actions = {
     })
   },
 
+  delete({commit, dispatch}, data){
+    return new Promise((resolve, reject) => {
+      http.post(`${uri}/api/soda/delete`, data)
+        .then(res => {
+          console.log(res)
+          dispatch('loadSodas')
+          resolve(res)
+        })
+        .catch(err => reject(err))
+    })
+  },
+
   create( {commit, dispatch}, dados ){
     return new Promise((resolve, reject) => {
       http.post(`${uri}/api/soda`, dados)
