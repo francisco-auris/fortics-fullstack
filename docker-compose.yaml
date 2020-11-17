@@ -27,6 +27,20 @@ services:
     depends_on: 
       - "dbase"
 
+  web:
+    image: node
+    container_name: web
+    volumes:
+      - ./web:/var/www/web
+    working_dir: /var/www/web
+    ports:
+      - "8000:8080"
+    command: "npm start"
+    networks: 
+      - "teste-network"
+    depends_on: 
+      - "api"
+
 networks:  
   teste-network:
     driver: bridge

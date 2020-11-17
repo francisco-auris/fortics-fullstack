@@ -5,7 +5,7 @@ Vue.use(VueResource)
 
 const http = Vue.http
 
-const uri = 'http://localhost:1234'
+const uri = 'http://api'
 
 http.options.root = uri
 

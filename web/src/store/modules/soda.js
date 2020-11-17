@@ -63,6 +63,23 @@ const actions = {
         })
         .catch(err => reject(err))
     })
+  },
+
+  update( {commit, dispatch}, dados ){
+    return new Promise((resolve, reject) => {
+      http.put(`${uri}/api/soda/${dados.id}`, dados)
+        .then(res => {
+          console.log(res)
+          if( res.status == 200 ){
+            dispatch('loadSodas')
+            resolve(res)
+          }
+          else {
+            reject(res)
+          }
+        })
+        .catch(err => reject(err))
+    })
   }
 
 }
@@ -71,7 +88,8 @@ const getters = {
   getList: (state) => state.list,
   getAll: (state) => state.all,
   nextPage: (state) => state.all.next_page_url,
-  backPage: (state) => state.all.prev_page_url
+  backPage: (state) => state.all.prev_page_url,
+  getSoda: (state) => (id) => state.list.find( p => p.id == id)
 }
 
 export default {

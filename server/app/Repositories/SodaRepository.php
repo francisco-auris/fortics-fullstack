@@ -38,13 +38,13 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
             }
             else {
                 //save data update
-                $this->model->brand_id = $req->input('brand_id');
-                $this->model->type_id = $req->input('type_id');
-                $this->model->flavor = $req->input('flavor');
-                $this->model->litigation_id = $req->input('litigation_id');
-                $this->model->value_unit = $req->input('value_unit');
-                $this->model->stock = $req->input('stock');
-                $this->model->save();
+                $obj->brand_id = $req->input('brand_id');
+                $obj->type_id = $req->input('type_id');
+                $obj->flavor = $req->input('flavor');
+                $obj->litigation_id = $req->input('litigation_id');
+                $obj->value_unit = $req->input('value_unit');
+                $obj->stock = $req->input('stock');
+                $obj->save();
 
                 $out['status'] = "success";
                 $out['response'] = 200;

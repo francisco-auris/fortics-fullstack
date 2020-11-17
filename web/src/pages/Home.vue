@@ -6,19 +6,19 @@
       <create-soda />
     </v-col>
     <v-col cols="4">
-      <v-chip
+      <v-btn
         v-if="selection.length"
         class="ma-2"
-        close
-        close-icon="delete"
         color="red"
         dark
-        @click:close="actionDelete"
+        :loading="loadingDel"
+        @click="actionDelete"
       >
-        {{ selection.length }} Selecionados
-      </v-chip>
-
-     
+        {{ selection.length }} Selecionados <v-icon>delete</v-icon>
+      </v-btn>
+    </v-col>
+    <v-col cols="2">
+      <update-soda :idsoda="selection[0] || null" v-show="selection.length == 1" />
     </v-col>
   </v-row>
 
@@ -110,18 +110,22 @@
 import { mapGetters } from 'vuex'
 
 import CreateSoda from '@/components/dialog/CreateSoda'
+import UpdateSoda from '@/components/dialog/UpdateSoda'
 
 export default {
 
   components: {
-    'create-soda': CreateSoda
+    'create-soda': CreateSoda,
+    'update-soda': UpdateSoda
   },
 
   data: () =>({
 
     filtro: '',
     loading: false,
-    selection: []
+    loadingDel: false,
+    selection: [],
+    mdlActiveUpdate: false, 
 
   }),
   created() {
@@ -164,19 +168,19 @@ export default {
     },
 
     async actionDelete(){
-      this.loading = true
+      this.loadingDel = true
 
       const data = {
         _method: 'DELETE',
         items: this.selection
       }
 
-      /*await this.$store.dispatch('soda/delete', data)  
+      await this.$store.dispatch('soda/delete', data)  
             .then(res => {
               this.selection = []
               alert(res.data.message);
-            })*/
-      this.loading = false
+            })
+      this.loadingDel = false
     }
   },
 
