@@ -40,9 +40,13 @@ const actions = {
     return new Promise((resolve, reject) => {
       http.post(`${uri}/api/soda`, dados)
         .then(res => {
-          resolve(res)
+          console.log(res)
           if( res.status == 200 ){
             dispatch('loadSodas')
+            resolve(res)
+          }
+          else {
+            reject(res)
           }
         })
         .catch(err => reject(err))

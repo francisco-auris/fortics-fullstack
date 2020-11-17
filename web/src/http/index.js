@@ -7,4 +7,6 @@ const http = Vue.http
 
 const uri = 'http://localhost:1234'
 
+http.options.root = uri
+
 export { http, uri }

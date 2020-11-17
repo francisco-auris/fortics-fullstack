@@ -44,6 +44,7 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
                 $this->model->litigation_id = $req->input('litigation_id');
                 $this->model->value_unit = $req->input('value_unit');
                 $this->model->stock = $req->input('stock');
+                $this->model->save();
 
                 $out['status'] = "success";
                 $out['response'] = 200;
@@ -76,6 +77,7 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
             $this->model->litigation_id = $req->input('litigation_id');
             $this->model->value_unit = $req->input('value_unit');
             $this->model->stock = $req->input('stock');
+            $this->model->save();
 
             $out['status'] = "success";
             $out['response'] = 200;

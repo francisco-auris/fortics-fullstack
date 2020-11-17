@@ -19,19 +19,32 @@
           <v-toolbar-title>Cadastro de refrigerantes</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="handleSubmit()" >Salvar</v-btn>
+            <v-btn dark text @click="handleSubmit()" :loading="loading" :disabled="visibleSubmit" >Salvar</v-btn>
           </v-toolbar-items>
         </v-toolbar>
 
         <v-container>
 
             <v-row>
+              <v-col cols="12">
+                <v-skeleton-loader
+                  class="mx-auto mt-5"
+                  type="paragraph"
+                  v-show="false"
+                ></v-skeleton-loader>
+              </v-col>
+            </v-row>
+
+            <v-row>
                 <v-col sm="4">
-                  <v-combobox
+                  <v-select
                     label="Marca"
+                    :items="brands"
+                    item-value="id"
+                    item-text="brand_name"
                     v-model="dados.brand_id"
                     :error-messages="errors.brand_id"
-                  ></v-combobox>
+                  ></v-select>
                     <!--<v-text-field
                         label="Nome completo"
                         type="text"
@@ -49,11 +62,14 @@
                     />
                 </v-col>
                 <v-col sm="4">
-                  <v-combobox
+                  <v-select
                     label="Litragem"
+                    :items="litigations"
+                    item-value="id"
+                    item-text="value"
                     v-model="dados.litigation_id"
                     :error-messages="errors.litigation_id"
-                  ></v-combobox>
+                  ></v-select>
                     <!--<v-text-field
                         label="CPF"
                         type="text"
@@ -65,11 +81,14 @@
             </v-row>
             <v-row>
             <v-col sm="4">
-                  <v-combobox
+                  <v-select
                     label="Tipo"
+                    :items="types"
+                    item-value="id"
+                    item-text="type_name"
                     v-model="dados.type_id"
                     :error-messages="errors.type_id"
-                  ></v-combobox>
+                  ></v-select>
                     <!--<v-text-field
                         label="CPF"
                         type="text"
@@ -94,9 +113,9 @@
                 </v-col>
 
             </v-row>
-{{ errors }}
+            {{ dados }}
         </v-container>
-
+  
       </v-card>
 
     </v-dialog>
@@ -120,6 +139,7 @@ export default {
         widgets: false,
         errors: [],
         subtmit: false,
+        loading: false,
         money: {
           decimal: ',',
           thousands: '.',
@@ -129,19 +149,49 @@ export default {
           masked: false
         }
     }),
+    created(){
+      
+    },
     mounted(){
-
+      //call push load types
+      this.$store.dispatch('type/loadTypes')
+      //call push load litigations
+      this.$store.dispatch('litigation/loadLitigations')
+      //call push load brands
+      this.$store.dispatch('brand/loadBrands')
     },
     computed: {
-
+      ...mapGetters({
+        types: 'type/getAll',
+        litigations: 'litigation/getAll',
+        brands: 'brand/getAll'
+      }),
+      visibleSubmit(){
+            if(
+                this.dados.flavor &&
+                this.dados.type_id &&
+                this.dados.litigation_id &&
+                this.dados.brand_id &&
+                this.dados.value_unit &&
+                this.dados.stock 
+            ){
+                //console.log('liberado')
+                return false
+            }else {
+                //console.log('pendente')
+                return true
+            }
+        }
     },
     methods: {
-        handleSubmit(){
-          this.$store.dispatch('soda/create', this.dados)
+        async handleSubmit(){
+          this.loading = true
+          await this.$store.dispatch('soda/create', this.dados)
             .then(res => {
               if( res.status == 200 ){
                 this.dados = {}
                 this.dialog = false
+                alert("Refrigerante cadastrado com sucesso.");
               }
             })
             .catch(err => {
@@ -153,6 +203,8 @@ export default {
 
               console.error('Erro create employe', err.data)
             })
+
+          this.loading = false
         }
     }
 }

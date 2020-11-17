@@ -47,10 +47,10 @@
   <v-skeleton-loader
     class="mx-auto"
     type="table-tbody"
-    v-if="!sodas"
+    v-if="loading"
   ></v-skeleton-loader>
 
-  <v-simple-table class="mt-5" v-show="sodas.length > 0">
+  <v-simple-table class="mt-5" v-else>
     <thead>
       <tr>
         <th>Marca</th>
@@ -88,7 +88,8 @@ export default {
 
   data: () =>({
 
-    filtro: ''
+    filtro: '',
+    loading: false
 
   }),
   created() {
@@ -124,8 +125,10 @@ export default {
     }
   },
   methods: {
-    pushDataList( page = 1 ){
-      this.$store.dispatch('soda/loadSodas', page)
+    async pushDataList( page = 1 ){
+      this.loading = true
+      await this.$store.dispatch('soda/loadSodas', page)
+      this.loading = false
     }
   },
 
