@@ -171,11 +171,11 @@ export default {
         items: this.selection
       }
 
-      await this.$store.dispatch('soda/delete', data)  
+      /*await this.$store.dispatch('soda/delete', data)  
             .then(res => {
               this.selection = []
               alert(res.data.message);
-            })
+            })*/
       this.loading = false
     }
   },

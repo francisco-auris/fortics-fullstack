@@ -113,7 +113,7 @@
                 </v-col>
 
             </v-row>
-            {{ dados }}
+            
         </v-container>
   
       </v-card>
@@ -198,10 +198,10 @@ export default {
               if( err.data.status == 'validate' ){
                 this.errors = err.data.data
               }else {
-                alert('Erro ao tentar criar novo refrigerante, tente novamente ou entre em contato com a TI :)');
+                alert(err.data.message);
               }
 
-              console.error('Erro create employe', err.data)
+              console.error('Erro create refri', err.data)
             })
 
           this.loading = false

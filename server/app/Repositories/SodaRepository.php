@@ -101,16 +101,25 @@ class SodaRepository extends AbstractRepository implements SodaInterface {
         }
         else {
 
-            $this->model->brand_id = $req->input('brand_id');
-            $this->model->type_id = $req->input('type_id');
-            $this->model->flavor = $req->input('flavor');
-            $this->model->litigation_id = $req->input('litigation_id');
-            $this->model->value_unit = $req->input('value_unit');
-            $this->model->stock = $req->input('stock');
-            $this->model->save();
+            $brand = $req->input('brand_id');
+            $litigation = $req->input('litigation_id');
 
-            $out['status'] = "success";
-            $out['response'] = 200;
+            if( count( $this->model->where('brand_id','=', $brand)->where('litigation_id','=',$litigation)->get() ) > 0 ){
+                $out['status'] = "exist";
+                $out['message'] = "Ja existe um refrigerante com essas mesmas caracteristicas";
+                $out['response'] = 400;
+            }
+            else {
+                $this->model->brand_id = $req->input('brand_id');
+                $this->model->type_id = $req->input('type_id');
+                $this->model->flavor = $req->input('flavor');
+                $this->model->litigation_id = $req->input('litigation_id');
+                $this->model->value_unit = $req->input('value_unit');
+                $this->model->stock = $req->input('stock');
+                $this->model->save();
+                $out['status'] = "success";
+                $out['response'] = 200;
+            }  
 
         }
 
