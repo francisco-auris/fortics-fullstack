@@ -6,13 +6,16 @@ Teste fullstack developer
 - Composer
 - Node & NPM
 
+## Libs
+- Vue
+- Vue-resouce
+- Vuex
+- V-money
+
 ## Inicialização
-> Navegue ate a pasta /server e execute `composer install`
-<br/>
-> Navegue até a pasta /web e execute `npm install`
-<br/>
-> Vá para raiz do projeto e execute o docker file com `docker-compose up`
-<br/>
+> Navegue ate a pasta /server e execute `composer install` <br/>
+> Navegue até a pasta /web e execute `npm install` <br/>
+> Vá para raiz do projeto e execute o docker file com `docker-compose up` <br/>
 > Após os containers terem iniciado execute o console do container `api` e execute o seguinte comando : `php artisan migrate --seed`
 
 ## Acesso
