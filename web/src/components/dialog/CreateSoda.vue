@@ -13,7 +13,7 @@
       </template>
       <v-card>
         <v-toolbar dark color="black">
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="close()">
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>Cadastro de refrigerantes</v-toolbar-title>
@@ -113,9 +113,9 @@
                 </v-col>
 
             </v-row>
-            
+
         </v-container>
-  
+
       </v-card>
 
     </v-dialog>
@@ -134,9 +134,6 @@ export default {
     data: () => ({
         dados: {},
         dialog: false,
-        notifications: false,
-        sound: true,
-        widgets: false,
         errors: [],
         subtmit: false,
         loading: false,
@@ -150,7 +147,7 @@ export default {
         }
     }),
     created(){
-      
+
     },
     mounted(){
       //call push load types
@@ -173,7 +170,7 @@ export default {
                 this.dados.litigation_id &&
                 this.dados.brand_id &&
                 this.dados.value_unit &&
-                this.dados.stock 
+                this.dados.stock
             ){
                 //console.log('liberado')
                 return false
@@ -205,6 +202,11 @@ export default {
             })
 
           this.loading = false
+        },
+
+        close(){
+          this.dados = {}
+          this.dialog = false
         }
     }
 }
